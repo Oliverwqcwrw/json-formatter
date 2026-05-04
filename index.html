@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON Formatter & Validator — Free AI-Powered Tool</title>
+  <meta name="description" content="Free AI-powered JSON formatter, validator, and minifier. Paste messy JSON and get it beautifully formatted instantly. Supports 4 AI providers." />
+  <meta name="keywords" content="json formatter, json validator, json beautifier, json minifier, free json tool, online json formatter" />
+  <link rel="canonical" href="https://oliverwqcwrw.github.io/json-formatter/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "JSON Formatter & Validator",
+    "url": "https://oliverwqcwrw.github.io/json-formatter/",
+    "description": "Free AI-powered JSON formatter, validator, and minifier with error explanation and schema detection.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+    header{background:#161b22;border-bottom:1px solid #30363d;padding:18px 24px;display:flex;align-items:center;gap:12px}
+    header h1{font-size:1.4rem;font-weight:700;color:#58a6ff}
+    header span{font-size:.85rem;color:#8b949e;background:#21262d;padding:3px 10px;border-radius:20px}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    .top-bar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+    .top-bar select,.top-bar input{background:#161b22;border:1px solid #30363d;color:#e6edf3;padding:8px 12px;border-radius:6px;font-size:.85rem}
+    .top-bar select:focus,.top-bar input:focus{outline:none;border-color:#58a6ff}
+    .top-bar input{flex:1;min-width:200px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:768px){.grid{grid-template-columns:1fr}}
+    .panel{background:#161b22;border:1px solid #30363d;border-radius:8px;overflow:hidden}
+    .panel-header{padding:10px 16px;background:#21262d;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center}
+    .panel-header span{font-size:.85rem;font-weight:600;color:#8b949e}
+    .panel-header .btns{display:flex;gap:6px}
+    textarea{width:100%;min-height:360px;background:#0d1117;border:none;color:#e6edf3;font-family:'Courier New',monospace;font-size:.85rem;padding:14px;resize:vertical;line-height:1.5}
+    textarea:focus{outline:none}
+    pre{padding:14px;min-height:360px;font-size:.85rem;font-family:'Courier New',monospace;overflow:auto;white-space:pre-wrap;word-break:break-all;line-height:1.5}
+    .btn{background:#238636;color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.82rem;font-weight:600;transition:background .2s}
+    .btn:hover{background:#2ea043}
+    .btn.sec{background:#21262d;border:1px solid #30363d;color:#e6edf3}
+    .btn.sec:hover{background:#30363d}
+    .btn.danger{background:#da3633}
+    .btn.danger:hover{background:#f85149}
+    .btn.blue{background:#1f6feb;color:#fff}
+    .btn.blue:hover{background:#388bfd}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .action-bar{display:flex;gap:8px;padding:12px 16px;background:#21262d;border-top:1px solid #30363d;flex-wrap:wrap}
+    .status{padding:8px 16px;font-size:.82rem;border-radius:4px;margin-bottom:12px}
+    .status.ok{background:#0f2b1e;border:1px solid #238636;color:#3fb950}
+    .status.err{background:#2d0a0a;border:1px solid #da3633;color:#f85149}
+    .status.info{background:#0d1926;border:1px solid #1f6feb;color:#58a6ff}
+    .ai-section{margin-top:20px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px}
+    .ai-section h3{font-size:.95rem;color:#58a6ff;margin-bottom:12px}
+    .ai-result{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;margin-top:12px;font-size:.85rem;line-height:1.6;min-height:60px;white-space:pre-wrap}
+    .stats{display:flex;gap:16px;flex-wrap:wrap;padding:8px 16px;background:#0d1117;border-top:1px solid #30363d;font-size:.78rem;color:#8b949e}
+    .stats span b{color:#e6edf3}
+    .donate{margin-top:40px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:24px;text-align:center}
+    .donate h3{color:#f0883e;font-size:1.1rem;margin-bottom:8px}
+    .donate p{color:#8b949e;font-size:.87rem;margin-bottom:20px}
+    .donate-grid{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+    .donate-item{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .donate-item img{border-radius:6px;border:2px solid #30363d}
+    .donate-item code{font-size:.7rem;color:#8b949e;word-break:break-all;max-width:130px;text-align:center}
+    .donate-label{font-size:.82rem;font-weight:600;color:#e6edf3}
+    .badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.72rem;font-weight:600}
+    .badge.valid{background:#0f2b1e;color:#3fb950;border:1px solid #238636}
+    .badge.invalid{background:#2d0a0a;color:#f85149;border:1px solid #da3633}
+    .spinner{display:inline-block;width:14px;height:14px;border:2px solid #30363d;border-top-color:#58a6ff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .indent-control{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#8b949e}
+    .indent-control select{padding:4px 8px;background:#21262d;border:1px solid #30363d;color:#e6edf3;border-radius:4px}
+    footer{text-align:center;padding:24px;color:#484f58;font-size:.8rem;margin-top:20px}
+    footer a{color:#58a6ff;text-decoration:none}
+    .key-row{display:flex;gap:8px;align-items:center}
+    .key-row .toggle{cursor:pointer;color:#58a6ff;font-size:.8rem;flex-shrink:0}
+    .highlight-key{color:#79c0ff}
+    .highlight-str{color:#a5d6ff}
+    .highlight-num{color:#f2cc60}
+    .highlight-bool{color:#ff7b72}
+    .highlight-null{color:#ff7b72}
+  </style>
+</head>
+<body>
+<header>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+  <h1>JSON Formatter</h1>
+  <span>Free &amp; AI-Powered</span>
+</header>
+
+<div class="container">
+  <!-- AI Provider Config -->
+  <div class="top-bar">
+    <select id="provider" onchange="onProviderChange()">
+      <option value="groq">Groq (Free)</option>
+      <option value="openrouter">OpenRouter (Free)</option>
+      <option value="deepseek">DeepSeek</option>
+      <option value="openai">OpenAI</option>
+    </select>
+    <div class="key-row" style="flex:1;min-width:200px">
+      <input type="password" id="apiKey" placeholder="API Key (saved locally)" oninput="saveKey()" />
+      <span class="toggle" onclick="toggleKey()">Show</span>
+    </div>
+    <div class="indent-control">
+      Indent:
+      <select id="indentSize" onchange="reformat()">
+        <option value="2">2 spaces</option>
+        <option value="4">4 spaces</option>
+        <option value="tab">Tab</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="statusBar"></div>
+
+  <div class="grid">
+    <!-- Input -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>📥 Input JSON</span>
+        <div class="btns">
+          <button class="btn sec" onclick="pasteClipboard()">Paste</button>
+          <button class="btn sec" onclick="loadSample()">Sample</button>
+          <button class="btn danger" onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+      <textarea id="input" placeholder='Paste your JSON here...\n\n{"name":"John","age":30}' oninput="onInput()"></textarea>
+      <div class="action-bar">
+        <button class="btn" onclick="format()">✨ Format</button>
+        <button class="btn sec" onclick="minify()">Minify</button>
+        <button class="btn sec" onclick="sortKeys()">Sort Keys</button>
+        <button class="btn blue" onclick="aiExplain()">🤖 AI Explain</button>
+      </div>
+    </div>
+
+    <!-- Output -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>📤 Formatted Output <span id="validBadge"></span></span>
+        <div class="btns">
+          <button class="btn sec" onclick="copyOutput()">Copy</button>
+          <button class="btn sec" onclick="downloadJSON()">Download</button>
+        </div>
+      </div>
+      <pre id="output">Your formatted JSON will appear here...</pre>
+      <div class="stats" id="statsBar">
+        <span>Lines: <b id="statLines">—</b></span>
+        <span>Size: <b id="statSize">—</b></span>
+        <span>Keys: <b id="statKeys">—</b></span>
+        <span>Depth: <b id="statDepth">—</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Section -->
+  <div class="ai-section">
+    <h3>🤖 AI Assistant</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn blue" onclick="aiExplain()">Explain Structure</button>
+      <button class="btn sec" onclick="aiSchema()">Generate Schema</button>
+      <button class="btn sec" onclick="aiFixErrors()">Fix Errors</button>
+      <button class="btn sec" onclick="aiSuggestImprovements()">Suggest Improvements</button>
+    </div>
+    <div class="ai-result" id="aiResult">AI insights will appear here. Paste JSON and click an AI action above.</div>
+  </div>
+
+  <!-- Donation -->
+  <div class="donate">
+    <h3>☕ Support This Free Tool</h3>
+    <p>If this tool saved you time, consider buying me a coffee. Every donation keeps it free forever!</p>
+    <div class="donate-grid">
+      <div class="donate-item">
+        <div class="donate-label">USDT (TRC-20)</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=TSvC67jexputnNHayVR8fpScwFmwvZV8jp" alt="USDT QR Code" width="110" height="110" />
+        <code>TSvC67jexputnNHayVR8fpScwFmwvZV8jp</code>
+      </div>
+      <div class="donate-item">
+        <div class="donate-label">ETH (ERC-20)</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=0x11e764fac3fcd4be16da43a252a62b156e06a632" alt="ETH QR Code" width="110" height="110" />
+        <code>0x11e764fac3fcd4be16da43a252a62b156e06a632</code>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built with ❤️ by <a href="https://oliverwqcwrw.github.io" target="_blank">Oliverwqcwrw</a> · 
+    <a href="https://oliverwqcwrw.github.io" target="_blank">More Free AI Tools</a>
+  </footer>
+</div>
+
+<script>
+const PROVIDERS = {
+  groq:       { url: 'https://api.groq.com/openai/v1/chat/completions',        model: 'llama-3.3-70b-versatile' },
+  openrouter: { url: 'https://openrouter.ai/api/v1/chat/completions',          model: 'meta-llama/llama-3.3-70b-instruct:free' },
+  deepseek:   { url: 'https://api.deepseek.com/v1/chat/completions',           model: 'deepseek-chat' },
+  openai:     { url: 'https://api.openai.com/v1/chat/completions',             model: 'gpt-4o-mini' }
+};
+
+let lastParsed = null;
+
+// --- API Key management ---
+function onProviderChange() {
+  const p = document.getElementById('provider').value;
+  document.getElementById('apiKey').value = localStorage.getItem('jf_key_' + p) || '';
+}
+function saveKey() {
+  const p = document.getElementById('provider').value;
+  localStorage.setItem('jf_key_' + p, document.getElementById('apiKey').value);
+}
+function toggleKey() {
+  const inp = document.getElementById('apiKey');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+window.onload = () => { onProviderChange(); }
+
+// --- Format / Validate ---
+function onInput() {
+  const raw = document.getElementById('input').value.trim();
+  if (!raw) { setStatus(''); clearOutput(); return; }
+  autoFormat(raw);
+}
+
+function autoFormat(raw) {
+  try {
+    const obj = JSON.parse(raw);
+    lastParsed = obj;
+    const indent = getIndent();
+    const pretty = JSON.stringify(obj, null, indent);
+    document.getElementById('output').innerHTML = syntaxHighlight(pretty);
+    setStatus('✅ Valid JSON', 'ok');
+    setBadge(true);
+    updateStats(pretty, obj);
+  } catch(e) {
+    lastParsed = null;
+    document.getElementById('output').textContent = raw;
+    setStatus('❌ ' + e.message, 'err');
+    setBadge(false);
+    clearStats();
+  }
+}
+
+function format() {
+  const raw = document.getElementById('input').value.trim();
+  if (!raw) { setStatus('Please paste JSON first', 'info'); return; }
+  autoFormat(raw);
+}
+
+function minify() {
+  const raw = document.getElementById('input').value.trim();
+  if (!raw) return;
+  try {
+    const obj = JSON.parse(raw);
+    const minified = JSON.stringify(obj);
+    document.getElementById('output').textContent = minified;
+    setStatus('✅ Minified — ' + minified.length + ' chars', 'ok');
+  } catch(e) {
+    setStatus('❌ Cannot minify invalid JSON: ' + e.message, 'err');
+  }
+}
+
+function sortKeys() {
+  const raw = document.getElementById('input').value.trim();
+  if (!raw) return;
+  try {
+    const obj = JSON.parse(raw);
+    const sorted = sortObj(obj);
+    const indent = getIndent();
+    const pretty = JSON.stringify(sorted, null, indent);
+    document.getElementById('output').innerHTML = syntaxHighlight(pretty);
+    document.getElementById('input').value = pretty;
+    setStatus('✅ Keys sorted alphabetically', 'ok');
+    lastParsed = sorted;
+    updateStats(pretty, sorted);
+  } catch(e) {
+    setStatus('❌ ' + e.message, 'err');
+  }
+}
+
+function sortObj(obj) {
+  if (Array.isArray(obj)) return obj.map(sortObj);
+  if (obj && typeof obj === 'object') {
+    return Object.keys(obj).sort().reduce((acc, k) => { acc[k] = sortObj(obj[k]); return acc; }, {});
+  }
+  return obj;
+}
+
+function reformat() {
+  const raw = document.getElementById('input').value.trim();
+  if (raw) autoFormat(raw);
+}
+
+function getIndent() {
+  const v = document.getElementById('indentSize').value;
+  return v === 'tab' ? '\t' : parseInt(v);
+}
+
+// --- Syntax highlighting ---
+function syntaxHighlight(json) {
+  return json
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, m => {
+      let cls = 'highlight-num';
+      if (/^"/.test(m)) cls = /:$/.test(m) ? 'highlight-key' : 'highlight-str';
+      else if (/true|false/.test(m)) cls = 'highlight-bool';
+      else if (/null/.test(m)) cls = 'highlight-null';
+      return `<span class="${cls}">${m}</span>`;
+    });
+}
+
+// --- Stats ---
+function updateStats(pretty, obj) {
+  document.getElementById('statLines').textContent = pretty.split('\n').length;
+  document.getElementById('statSize').textContent = formatBytes(new Blob([pretty]).size);
+  document.getElementById('statKeys').textContent = countKeys(obj);
+  document.getElementById('statDepth').textContent = getDepth(obj);
+}
+function clearStats() {
+  ['statLines','statSize','statKeys','statDepth'].forEach(id => document.getElementById(id).textContent = '—');
+}
+function countKeys(obj) {
+  if (typeof obj !== 'object' || !obj) return 0;
+  let n = Array.isArray(obj) ? 0 : Object.keys(obj).length;
+  for (const v of Object.values(obj)) n += countKeys(v);
+  return n;
+}
+function getDepth(obj, d=0) {
+  if (typeof obj !== 'object' || !obj) return d;
+  return Math.max(...Object.values(obj).map(v => getDepth(v, d+1)), d+1);
+}
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+
+// --- UI helpers ---
+function setStatus(msg, type) {
+  const el = document.getElementById('statusBar');
+  if (!msg) { el.innerHTML=''; return; }
+  el.innerHTML = `<div class="status ${type}">${msg}</div>`;
+}
+function setBadge(valid) {
+  document.getElementById('validBadge').innerHTML = valid
+    ? '<span class="badge valid">✓ Valid</span>'
+    : '<span class="badge invalid">✗ Invalid</span>';
+}
+function clearOutput() {
+  document.getElementById('output').textContent = 'Your formatted JSON will appear here...';
+  document.getElementById('validBadge').innerHTML = '';
+  clearStats();
+}
+
+// --- Actions ---
+async function pasteClipboard() {
+  try {
+    const text = await navigator.clipboard.readText();
+    document.getElementById('input').value = text;
+    onInput();
+  } catch { setStatus('Clipboard access denied. Please paste manually.', 'info'); }
+}
+
+function copyOutput() {
+  const text = document.getElementById('output').textContent;
+  navigator.clipboard.writeText(text).then(() => setStatus('✅ Copied to clipboard!', 'ok'));
+}
+
+function downloadJSON() {
+  const text = document.getElementById('output').textContent;
+  const blob = new Blob([text], {type:'application/json'});
+  const a = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob), download:'formatted.json'});
+  a.click();
+}
+
+function clearAll() {
+  document.getElementById('input').value = '';
+  clearOutput();
+  setStatus('');
+  document.getElementById('aiResult').textContent = 'AI insights will appear here. Paste JSON and click an AI action above.';
+  lastParsed = null;
+}
+
+function loadSample() {
+  const sample = {
+    "user": { "id": 1, "name": "Jane Doe", "email": "jane@example.com", "age": 28, "active": true, "roles": ["admin","editor"], "address": {"city":"New York","country":"US"} },
+    "timestamp": "2024-01-15T10:30:00Z",
+    "metadata": { "version": "1.0.0", "tags": ["production","v2"], "config": { "timeout": 30, "retries": 3, "debug": false } }
+  };
+  document.getElementById('input').value = JSON.stringify(sample);
+  onInput();
+}
+
+// --- AI ---
+async function callAI(prompt) {
+  const provider = document.getElementById('provider').value;
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) { return '⚠️ Please enter an API key for ' + provider + ' in the top bar.'; }
+  const cfg = PROVIDERS[provider];
+  const headers = {'Content-Type':'application/json','Authorization':'Bearer '+key};
+  if (provider==='openrouter') {
+    headers['HTTP-Referer'] = 'https://oliverwqcwrw.github.io/json-formatter/';
+    headers['X-Title'] = 'JSON Formatter';
+  }
+  const body = JSON.stringify({ model: cfg.model, messages: [{role:'user',content:prompt}], max_tokens: 800, temperature: 0.3 });
+  const res = await fetch(cfg.url, {method:'POST', headers, body});
+  const data = await res.json();
+  if (!res.ok) return '❌ API Error: ' + (data.error?.message || JSON.stringify(data));
+  return data.choices?.[0]?.message?.content || '(no response)';
+}
+
+function getJSON() {
+  const raw = document.getElementById('input').value.trim();
+  if (!raw) return null;
+  return raw;
+}
+
+async function aiExplain() {
+  const raw = getJSON();
+  if (!raw) { setStatus('Please paste JSON first', 'info'); return; }
+  document.getElementById('aiResult').innerHTML = '<span class="spinner"></span>Analyzing JSON structure...';
+  const prompt = `Analyze this JSON and explain its structure in plain English. Identify the data types, nesting, key relationships, and what kind of data this might represent. Be concise and helpful.\n\nJSON:\n${raw.substring(0,3000)}`;
+  const result = await callAI(prompt);
+  document.getElementById('aiResult').textContent = result;
+}
+
+async function aiSchema() {
+  const raw = getJSON();
+  if (!raw) { setStatus('Please paste JSON first', 'info'); return; }
+  document.getElementById('aiResult').innerHTML = '<span class="spinner"></span>Generating JSON Schema...';
+  const prompt = `Generate a valid JSON Schema (draft-07) for the following JSON. Include type, properties, required fields, and descriptions where appropriate.\n\nJSON:\n${raw.substring(0,3000)}`;
+  const result = await callAI(prompt);
+  document.getElementById('aiResult').textContent = result;
+}
+
+async function aiFixErrors() {
+  const raw = document.getElementById('input').value.trim();
+  if (!raw) { setStatus('Please paste JSON first', 'info'); return; }
+  document.getElementById('aiResult').innerHTML = '<span class="spinner"></span>Attempting to fix JSON errors...';
+  const prompt = `The following text has JSON syntax errors. Please fix it and return only the valid, properly formatted JSON. If it\'s already valid, just return it formatted.\n\nInput:\n${raw.substring(0,3000)}`;
+  const result = await callAI(prompt);
+  document.getElementById('aiResult').textContent = result;
+  // Try to apply the fix
+  try {
+    const cleaned = result.match(/```json\n?([\s\S]+?)\n?```/)?.[1] || result;
+    const obj = JSON.parse(cleaned);
+    document.getElementById('input').value = cleaned;
+    lastParsed = obj;
+    autoFormat(cleaned);
+    setStatus('✅ AI fixed the JSON errors!', 'ok');
+  } catch { /* leave as is */ }
+}
+
+async function aiSuggestImprovements() {
+  const raw = getJSON();
+  if (!raw) { setStatus('Please paste JSON first', 'info'); return; }
+  document.getElementById('aiResult').innerHTML = '<span class="spinner"></span>Analyzing for improvements...';
+  const prompt = `Review this JSON and suggest improvements: naming conventions, structure optimization, missing fields, data type improvements, or potential issues. Be practical and specific.\n\nJSON:\n${raw.substring(0,3000)}`;
+  const result = await callAI(prompt);
+  document.getElementById('aiResult').textContent = result;
+}
+</script>
+</body>
+</html>
